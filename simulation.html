@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Simulation Réseau Corrigée</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      margin: 0;
+      background: linear-gradient(135deg, #d5daed, #a09fe5, #4863d2);
+      color: #333;
+      min-height: 100vh;
+      padding-bottom: 20px;
+    }
+
+    .navbar {
+      background: linear-gradient(90deg, #0f1b3a, #1f3b8c);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      font-weight: bold;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+      padding: 0;
+      margin: 0;
+    }
+
+    .nav-links li a {
+      text-decoration: none;
+      color: white;
+      font-weight: 600;
+      padding: 8px 12px;
+      border-radius: 5px;
+      transition: all 0.3s;
+    }
+
+    .nav-links li a:hover, 
+    .nav-links li a.active {
+      background: rgba(73, 173, 244, 0.3);
+      color: #49adf4;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    button {
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 10px rgba(52, 101, 217, 0.3);
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(52, 101, 217, 0.4);
+    }
+
+    #btn-connecter {
+      background: rgb(69, 157, 69);
+    }
+
+    #btn-connecter.active {
+      background: darkgreen;
+      box-shadow: 0 0 0 3px rgba(0, 100, 0, 0.3);
+    }
+
+    #btn-effacer {
+      background: rgb(239, 85, 58);
+    }
+
+    #btn-effacer-unique {
+      background: #3498db;
+    }
+
+    #btn-effacer-unique.active {
+      background: #2980b9;
+      box-shadow: 0 0 0 3px rgba(41, 128, 185, 0.3);
+    }
+
+    #btn-ping {
+      background: rgb(161, 40, 161);
+    }
+
+    #btn-sauvegarder {
+      background: blueviolet;
+    }
+
+    #btn-charger {
+      background: rgb(112, 39, 182);
+    }
+
+    .canvas {
+      display: grid;
+      grid-template-columns: 200px 1fr 300px;
+      gap: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .panneau {
+      background: rgba(255, 255, 255, 0.92);
+      border-radius: 15px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+      padding: 20px;
+      backdrop-filter: blur(10px);
+      height: fit-content;
+    }
+
+    .titre {
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      color: #1f3b8c;
+      border-bottom: 2px solid #e0e0e0;
+      padding-bottom: 10px;
+      text-align: center;
+    }
+
+    .palette {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .appareil {
+      background: white;
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+      cursor: grab;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .appareil:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+      border-color: #49adf4;
+    }
+
+    .appareil img {
+      width: 60px;
+      height: 60px;
+      display: block;
+      margin: 0 auto 10px;
+      pointer-events: none;
+    }
+
+    .appareil p {
+      font-weight: 600;
+      color: #2c3e50;
+      font-size: 14px;
+      pointer-events: none;
+      margin: 0;
+    }
+
+    .canvas-area {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+      overflow: hidden;
+      height: 700px;
+      position: relative;
+    }
+
+    #zone-dynamique {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background:
+        linear-gradient(to right, #f0f4f9 1px, transparent 1px),
+        linear-gradient(to bottom, #f0f4f9 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+
+    .appareil-dynamic {
+      position: absolute;
+      cursor: grab;
+      width: 80px;
+      text-align: center;
+      z-index: 10;
+      transition: transform 0.2s;
+      border: 2px solid transparent;
+    }
+
+    .appareil-dynamic:hover {
+      transform: scale(1.05);
+    }
+
+    .appareil-dynamic img {
+      width: 50px;
+      height: 50px;
+      margin: 0 auto 5px;
+    }
+
+    .appareil-dynamic p {
+      font-weight: 600;
+      font-size: 12px;
+      color: #2c3e50;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 3px;
+      border-radius: 5px;
+      margin: 0;
+    }
+
+    .appareil-dynamic.selectionne {
+      border: 3px solid #27ae60;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(39, 174, 96, 0.7);
+    }
+    
+    .appareil-dynamic.info-selectionne {
+      border: 3px solid #3498db;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(52, 152, 219, 0.7);
+    }
+
+    #svg-lignes {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .info-section {
+      background: #f8f9fa;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+
+    .info-title {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: #1f3b8c;
+      text-align: center;
+    }
+
+    .info-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .info-label {
+      font-weight: 600;
+      color: #2c3e50;
+    }
+
+    .info-value {
+      color: #7f8c8d;
+    }
+    
+    #input-ip {
+      width: 150px;
+      padding: 5px 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      transition: all 0.3s;
+    }
+    
+    #input-ip:focus {
+      outline: none;
+      border-color: #3498db;
+      box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+    }
+    
+    #input-ip.disabled {
+      background-color: #f0f0f0;
+      cursor: not-allowed;
+    }
+
+    #input-mask {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      color: #0f1b3a;
+    }
+
+    .connexions-list {
+      max-height: 200px;
+      overflow-y: auto;
+      margin-top: 10px;
+    }
+
+    .connexion-item {
+      background: white;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      border-left: 4px solid #3498db;
+    }
+
+    .connexion-type {
+      font-weight: 600;
+      color: #2c3e50;
+    }
+
+    .connexion-devices {
+      font-size: 14px;
+      color: #7f8c8d;
+      margin-top: 5px;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      color: white;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+    
+    .save-notification {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #27ae60;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: 1000;
+    }
+    
+    .switch-disabled {
+      color: #95a5a6;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo">NetMap</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="tutoriel.html">Tutoriel</a></li>
+        <li><a href="simulation.html" class="active">Simulation</a></li>
+        <li><a href="quiz.html">Quiz</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <div class="controls">
+    <button type="button" id="btn-connecter" onclick="toggleModeConnexion()">Mode Connexion</button>
+    <button type="button" id="btn-effacer" onclick="effacerZoneDynamique()">Effacer tout</button>
+    <button type="button" id="btn-effacer-unique" onclick="activerModeSuppression()">Supprimer un appareil</button>
+    <button type="button" id="btn-ping" onclick="verifierConnexionsAvecReset()">Vérifier connexion</button>
+    <button type="button" id="btn-sauvegarder" onclick="sauvegarderReseau()">Sauvegarder</button>
+    <button type="button" id="btn-charger" onclick="chargerReseau()">Charger</button>
+
+
+  </div>
+
+  <div class="canvas">
+    <div class="panneau">
+      <h3 class="titre">Appareils</h3>
+      <div class="palette">
+        <div class="appareil" data-type="Routeur">
+          <img src="https://img.icons8.com/?size=100&id=ijwjXWMdoPVL&format=png&color=3465d9" alt="Routeur">
+          <p>Routeur</p>
+        </div>
+        <div class="appareil" data-type="Switch">
+          <img src="https://img.icons8.com/?size=100&id=OCJvp6Xbr0qL&format=png&color=27ae60" alt="Switch">
+          <p>Switch</p>
+        </div>
+        <div class="appareil" data-type="PC">
+          <img src="https://img.icons8.com/?size=100&id=1345&format=png&color=e74c3c" alt="PC">
+          <p>PC</p>
+        </div>
+        <div class="appareil" data-type="Portable">
+          <img src="https://img.icons8.com/?size=100&id=dkJjwk0X5JYU&format=png&color=f39c12" alt="Portable">
+          <p>Portable</p>
+        </div>
+        <div class="appareil" data-type="Serveur">
+          <img src="https://img.icons8.com/?size=100&id=Zf6mA5BR1U2Z&format=png&color=9b59b6" alt="Serveur">
+          <p>Serveur</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="panneau">
+      <div class="canvas-area">
+        <div id="zone-dynamique">
+        </div>
+        <svg id="svg-lignes"></svg>
+      </div>
+    </div>
+    
+    <div class="panneau">
+      <div class="info-section">
+        <h3 class="info-title">Détails du Composant</h3>
+        <div class="info-item">
+          <span class="info-label">Nom:</span>
+          <span class="info-value" id="info-name">-</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Type:</span>
+          <span class="info-value" id="info-type">-</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Adresse IP:</span>
+          <span class="info-value">
+            <input type="text" id="input-ip" placeholder="Saisir IP">
+          </span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Adresse MAC:</span>
+          <span class="info-value" id="info-mac">-</span>
+        </div>
+        <div class="info-item switch-disabled" id="switch-warning" style="display: none;">
+          <span class="info-value">Les switches n'ont pas d'adresse IP</span>
+        </div>
+      </div><br>
+      <label for="input-mask" style="font-weight: bold;">Masque :</label>
+      <input type="number" id="input-mask" min="1" max="32" value="24">
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>Simulation Réseau © 2025 - NetMap</p>
+  </div>
+
+<script>
+const palette = document.querySelector(".palette");
+const zoneDynamique = document.getElementById("zone-dynamique");
+const infoNom = document.getElementById("info-name");
+const infoType = document.getElementById("info-type");
+const inputIP = document.getElementById("input-ip");
+const infoMAC = document.getElementById("info-mac");
+const svgLignes = document.getElementById("svg-lignes");
+const btnConnecter = document.getElementById("btn-connecter");
+const btnEffacer = document.getElementById("btn-effacer");
+const btnEffacerUnique = document.getElementById("btn-effacer-unique");
+const switchWarning = document.getElementById("switch-warning");
+const inputMask = document.getElementById("input-mask");
+
+const compteurs = { Routeur: 0, Switch: 0, PC: 0, Portable: 0, Serveur: 0 };
+
+let appareilDéplacé = null;
+let décalageX = 0;
+let décalageY = 0;
+let modeConnexion = false;
+let appareilInfoSelectionne = null;
+let appareilConnexionSelectionne = null;
+let modeSuppression = false;
+let connexions = [];
+
+function genererMAC() {
+  const hex = () => Math.floor(Math.random() * 256).toString(16).padStart(2, "0");
+  return `${hex()}:${hex()}:${hex()}:${hex()}:${hex()}:${hex()}`;
+}
+
+function afficherInfos(appareil) {
+  if (!appareil) return;
+  infoNom.textContent = appareil.dataset.nom || "-";
+  infoType.textContent = appareil.dataset.type || "-";
+  infoMAC.textContent = appareil.dataset.mac || "-";
+  if (appareil.dataset.type === "Switch") {
+    inputIP.value = "N/A";
+    inputIP.disabled = true;
+    inputIP.classList.add("disabled");
+    switchWarning.style.display = "block";
+  } else {
+    inputIP.value = appareil.dataset.ip || "";
+    inputIP.disabled = false;
+    inputIP.classList.remove("disabled");
+    switchWarning.style.display = "none";
+  }
+}
+
+function sauvegarderIP() {
+  if (appareilInfoSelectionne && appareilInfoSelectionne.dataset.type !== "Switch") {
+    appareilInfoSelectionne.dataset.ip = inputIP.value;
+  }
+}
+
+inputIP.addEventListener("input", sauvegarderIP);
+inputIP.addEventListener("blur", sauvegarderIP);
+
+function toggleModeConnexion() {
+  if (modeSuppression) {
+    modeSuppression = false;
+    btnEffacerUnique.classList.remove("active");
+    btnEffacerUnique.textContent = "Supprimer un appareil";
+  }
+  modeConnexion = !modeConnexion;
+  if (modeConnexion) {
+    btnConnecter.classList.add("active");
+    btnConnecter.textContent = "Mode Connexion (actif)";
+    if (appareilConnexionSelectionne) {
+      appareilConnexionSelectionne.classList.remove("selectionne");
+      appareilConnexionSelectionne = null;
+    }
+  } else {
+    btnConnecter.classList.remove("active");
+    btnConnecter.textContent = "Mode Connexion";
+    if (appareilConnexionSelectionne) {
+      appareilConnexionSelectionne.classList.remove("selectionne");
+      appareilConnexionSelectionne = null;
+    }
+  }
+}
+
+function activerModeSuppression() {
+  if (modeConnexion) {
+    modeConnexion = false;
+    btnConnecter.classList.remove("active");
+    btnConnecter.textContent = "Mode Connexion";
+    if (appareilConnexionSelectionne) {
+      appareilConnexionSelectionne.classList.remove("selectionne");
+      appareilConnexionSelectionne = null;
+    }
+  }
+  modeSuppression = true;
+  btnEffacerUnique.classList.add("active");
+  btnEffacerUnique.textContent = "Mode Suppression (actif)";
+}
+
+function gérerClicAppareil(e, appareil) {
+  if (modeSuppression) {
+    supprimerAppareilEtConnexions(appareil);
+    return;
+  }
+
+  if (modeConnexion) {
+    if (!appareilConnexionSelectionne) {
+      appareilConnexionSelectionne = appareil;
+      appareil.classList.add("selectionne");
+    } else if (appareil !== appareilConnexionSelectionne) {
+      créerConnexion(appareilConnexionSelectionne, appareil);
+      appareilConnexionSelectionne.classList.remove("selectionne");
+      appareilConnexionSelectionne = null;
+    } else {
+      appareilConnexionSelectionne.classList.remove("selectionne");
+      appareilConnexionSelectionne = null;
+    }
+  } else {
+    if (appareilInfoSelectionne) {
+      appareilInfoSelectionne.classList.remove("info-selectionne");
+    }
+    appareilInfoSelectionne = appareil;
+    appareil.classList.add("info-selectionne");
+    afficherInfos(appareil);
+  }
+}
+
+function créerConnexion(appareil1, appareil2) {
+  const existeDeja = connexions.some(conn =>
+    (conn.appareil1 === appareil1 && conn.appareil2 === appareil2) ||
+    (conn.appareil1 === appareil2 && conn.appareil2 === appareil1)
+  );
+  if (existeDeja) {
+    alert("Ces appareils sont déjà connectés !");
+    return;
+  }
+  const connexion = {
+    appareil1,
+    appareil2,
+    ligne: dessinerLigne(appareil1, appareil2)
+  };
+  connexions.push(connexion);
+}
+
+function dessinerLigne(appareil1, appareil2) {
+  const p1 = getCentreAppareil(appareil1);
+  const p2 = getCentreAppareil(appareil2);
+  const ligne = document.createElementNS("http://www.w3.org/2000/svg", "line");
+  ligne.setAttribute("x1", p1.x);
+  ligne.setAttribute("y1", p1.y);
+  ligne.setAttribute("x2", p2.x);
+  ligne.setAttribute("y2", p2.y);
+  ligne.setAttribute("stroke", "#3498db");
+  ligne.setAttribute("stroke-width", "3");
+  ligne.setAttribute("stroke-dasharray", "5,3");
+  svgLignes.appendChild(ligne);
+  return ligne;
+}
+
+function getCentreAppareil(appareil) {
+  const rect = appareil.getBoundingClientRect();
+  const zoneRect = zoneDynamique.getBoundingClientRect();
+  return {
+    x: rect.left - zoneRect.left + rect.width / 2,
+    y: rect.top - zoneRect.top + rect.height / 2
+  };
+}
+
+function mettreAJourLignes() {
+  connexions.forEach(conn => {
+    const p1 = getCentreAppareil(conn.appareil1);
+    const p2 = getCentreAppareil(conn.appareil2);
+    conn.ligne.setAttribute("x1", p1.x);
+    conn.ligne.setAttribute("y1", p1.y);
+    conn.ligne.setAttribute("x2", p2.x);
+    conn.ligne.setAttribute("y2", p2.y);
+  });
+}
+
+palette.querySelectorAll(".appareil").forEach(appareil => {
+  appareil.addEventListener("mousedown", e => {
+    const original = e.currentTarget;
+    const type = original.dataset.type;
+    const clone = original.cloneNode(true);
+    clone.style.position = "absolute";
+    clone.style.left = (e.clientX - zoneDynamique.getBoundingClientRect().left - 40) + "px";
+    clone.style.top = (e.clientY - zoneDynamique.getBoundingClientRect().top - 40) + "px";
+    clone.style.cursor = "grabbing";
+    clone.style.zIndex = 1000;
+    clone.classList.add("appareil-dynamic");
+    const compteurActuel = compteurs[type]++;
+    clone.dataset.nom = `${type} ${compteurActuel}`;
+    clone.dataset.type = type;
+    clone.dataset.mac = genererMAC();
+    if (type !== "Switch") clone.dataset.ip = "";
+    clone.addEventListener("mousedown", activerDeplacementInterne);
+    clone.addEventListener("click", e => gérerClicAppareil(e, clone));
+    zoneDynamique.appendChild(clone);
+    appareilDéplacé = clone;
+    décalageX = e.clientX - original.getBoundingClientRect().left;
+    décalageY = e.clientY - original.getBoundingClientRect().top;
+    document.addEventListener("mousemove", deplacer);
+    document.addEventListener("mouseup", finDeplacement);
+    e.preventDefault();
+  });
+});
+
+function deplacer(e) {
+  if (!appareilDéplacé) return;
+  const zone = zoneDynamique.getBoundingClientRect();
+  let gauche = e.clientX - zone.left - décalageX;
+  let haut = e.clientY - zone.top - décalageY;
+  gauche = Math.max(0, Math.min(gauche, zoneDynamique.clientWidth - appareilDéplacé.offsetWidth));
+  haut = Math.max(0, Math.min(haut, zoneDynamique.clientHeight - appareilDéplacé.offsetHeight));
+  appareilDéplacé.style.left = gauche + "px";
+  appareilDéplacé.style.top = haut + "px";
+  mettreAJourLignes();
+}
+
+function finDeplacement() {
+  if (!appareilDéplacé) return;
+  appareilDéplacé.style.cursor = "grab";
+  if (appareilDéplacé === appareilInfoSelectionne) sauvegarderIP();
+  appareilDéplacé = null;
+  document.removeEventListener("mousemove", deplacer);
+  document.removeEventListener("mouseup", finDeplacement);
+}
+
+function activerDeplacementInterne(e) {
+  if (appareilInfoSelectionne) sauvegarderIP();
+  appareilDéplacé = e.currentTarget;
+  const pos = appareilDéplacé.getBoundingClientRect();
+  décalageX = e.clientX - pos.left;
+  décalageY = e.clientY - pos.top;
+  document.addEventListener("mousemove", deplacer);
+  document.addEventListener("mouseup", finDeplacement);
+  appareilDéplacé.style.cursor = "grabbing";
+  appareilInfoSelectionne = appareilDéplacé;
+  afficherInfos(appareilDéplacé);
+  e.preventDefault();
+}
+
+function effacerZoneDynamique() {
+  zoneDynamique.querySelectorAll('.appareil-dynamic').forEach(app => app.remove());
+  svgLignes.innerHTML = '';
+  connexions = [];
+  modeConnexion = false;
+  modeSuppression = false;
+  appareilInfoSelectionne = null;
+  appareilConnexionSelectionne = null;
+  for (let type in compteurs) compteurs[type] = 0;
+  infoNom.textContent = "-";
+  infoType.textContent = "-";
+  inputIP.value = "";
+  infoMAC.textContent = "-";
+  inputIP.disabled = false;
+  inputIP.classList.remove("disabled");
+  switchWarning.style.display = "none";
+  btnConnecter.classList.remove("active");
+  btnConnecter.textContent = "Mode Connexion";
+  btnEffacerUnique.classList.remove("active");
+  btnEffacerUnique.textContent = "Supprimer un appareil";
+}
+
+function supprimerAppareilEtConnexions(appareil) {
+  if (appareil === appareilInfoSelectionne) sauvegarderIP();
+  connexions = connexions.filter(conn => {
+    if (conn.appareil1 === appareil || conn.appareil2 === appareil) {
+      if (conn.ligne.parentNode) conn.ligne.parentNode.removeChild(conn.ligne);
+      return false;
+    }
+    return true;
+  });
+  if (appareil === appareilInfoSelectionne) {
+    infoNom.textContent = "-";
+    infoType.textContent = "-";
+    inputIP.value = "";
+    infoMAC.textContent = "-";
+    inputIP.disabled = false;
+    inputIP.classList.remove("disabled");
+    switchWarning.style.display = "none";
+    appareilInfoSelectionne = null;
+  }
+  appareil.remove();
+  modeSuppression = false;
+  btnEffacerUnique.classList.remove("active");
+  btnEffacerUnique.textContent = "Supprimer un appareil";
+}
+
+function verifierConnexionsAvecReset() {
+  const masque = parseInt(inputMask.value) || 24; 
+  connexions.forEach(conn => {
+    const ip1 = conn.appareil1.dataset.ip;
+    const ip2 = conn.appareil2.dataset.ip;
+    if (ip1 && ip2 && ip1 !== "" && ip2 !== "" && ip1 !== "N/A" && ip2 !== "N/A") {
+      if (memeReseau(ip1, ip2, masque)) {
+        conn.ligne.setAttribute("stroke", "green");
+      } else {
+        conn.ligne.setAttribute("stroke", "red");
+      }
+    } else {
+      conn.ligne.setAttribute("stroke", "gray");
+    }
+  });
+  setTimeout(() => connexions.forEach(conn => conn.ligne.setAttribute("stroke", "#3498db")), 3000);
+}
+
+function memeReseau(ip1, ip2, masque = 24) {
+  const bin1 = ipEnBinaire(ip1);
+  const bin2 = ipEnBinaire(ip2);
+  
+  return bin1.substring(0, masque) === bin2.substring(0, masque);
+}
+
+function ipEnBinaire(ip) {
+  return ip.split('.')
+           .map(octet => parseInt(octet).toString(2).padStart(8, '0'))
+           .join('');
+}
+
+function sauvegarderReseau() {
+  const appareils = [...zoneDynamique.querySelectorAll('.appareil-dynamic')].map(app => ({
+    nom: app.dataset.nom,
+    type: app.dataset.type,
+    ip: app.dataset.ip || "",
+    mac: app.dataset.mac,
+    left: app.style.left,
+    top: app.style.top,
+  }));
+  
+  const connexionsData = connexions.map(conn => ({
+    index1: appareils.findIndex(a => a.nom === conn.appareil1.dataset.nom),
+    index2: appareils.findIndex(a => a.nom === conn.appareil2.dataset.nom),
+  }));
+  
+  localStorage.setItem('reseauAppareils', JSON.stringify(appareils));
+  localStorage.setItem('reseauConnexions', JSON.stringify(connexionsData));
+  
+  alert("Réseau sauvegardé !");
+}
+
+function chargerReseau() {
+  const appareilsJSON = localStorage.getItem('reseauAppareils');
+  const connexionsJSON = localStorage.getItem('reseauConnexions');
+  
+  if (!appareilsJSON || !connexionsJSON) {
+    alert("Aucun réseau sauvegardé.");
+    return;
+  }
+  
+  effacerZoneDynamique(); 
+  
+  const appareils = JSON.parse(appareilsJSON);
+  const connexionsData = JSON.parse(connexionsJSON);
+  
+  appareils.forEach((appData, i) => {
+    const div = document.createElement('div');
+    div.classList.add('appareil-dynamic');
+    div.dataset.nom = appData.nom;
+    div.dataset.type = appData.type;
+    div.dataset.ip = appData.ip;
+    div.dataset.mac = appData.mac;
+    
+    div.style.position = 'absolute';
+    div.style.left = appData.left;
+    div.style.top = appData.top;
+    div.style.cursor = 'grab';
+    
+    div.innerHTML = `
+      <img src="${getIconeParType(appData.type)}" alt="${appData.type}">
+      <p>${appData.nom}</p>
+    `;
+    
+    div.addEventListener('mousedown', activerDeplacementInterne);
+    div.addEventListener('click', (e) => gérerClicAppareil(e, div));
+    
+    zoneDynamique.appendChild(div);
+   
+    const type = appData.type;
+    compteurs[type] = Math.max(compteurs[type], parseInt(appData.nom.split(' ').pop()) + 1);
+  });
+  
+  connexionsData.forEach(connData => {
+    const appareil1 = zoneDynamique.children[connData.index1];
+    const appareil2 = zoneDynamique.children[connData.index2];
+    if (appareil1 && appareil2) {
+      créerConnexion(appareil1, appareil2);
+    }
+  });
+  
+  alert("Réseau chargé !");
+}
+</script>
+</body>
+</html>
