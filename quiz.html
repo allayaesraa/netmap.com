@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: left;
+      margin: 0;
+      background: linear-gradient(135deg, #d5daed, #a09fe5, #4863d2);
+      color: #333;
+      min-height: 100vh;
+      padding-bottom: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #095686;
+      font-size: 50px;
+    }
+    .navbar {
+      background: linear-gradient(90deg, #0f1b3a, #1f3b8c);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      font-weight: bold;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+      padding: 0;
+      margin: 0;
+    }
+
+    .nav-links li a {
+      text-decoration: none;
+      color: white;
+      font-weight: 600;
+      padding: 8px 12px;
+      border-radius: 5px;
+      transition: all 0.3s;
+    }
+
+    .nav-links li a:hover, 
+    .nav-links li a.active {
+      background: rgba(73, 173, 244, 0.3);
+      color: #49adf4;
+    }
+
+    .question {
+      display: none;
+      background-color: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+    .question.active {
+      display: block;
+    }
+    button {
+     background-color: #007bff; /* bleu */
+     color: white;
+     border: none;
+     padding: 10px 25px;
+     font-size: 16px;
+     border-radius: 5px;
+     cursor: pointer;
+     transition: background-color 0.3s ease;
+     margin-top: 10px;
+    }
+
+    button:hover {
+     background-color: #0056b3; 
+    }
+
+    button:disabled {
+     background-color: #abacad;
+     cursor: not-allowed;
+    }
+    #cocher{
+        color: #71a0d9;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      color: white;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    #Score {
+      text-align: center;
+      font-size: 30px;
+      font-weight: bold;
+      margin-top: 100px;
+      color: white;
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo">NetMap</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="tutoriel.html">Tutoriel</a></li>
+        <li><a href="simulation.html">Simulation</a></li>
+        <li><a href="quiz.html" class="active">Quiz</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <h1>Quiz</h1>
+
+  <form id="quizForm">
+    <div class="question active">
+      <h3>1. Quel appareil dirige le trafic entre plusieurs réseaux ?</h3><br/>
+      <div id="cocher"><p>cocher la bonne réponse</p></div><br/>
+      <label><input type="radio" name="q1" value="Routeur" />Routeur</label><br />
+      <label><input type="radio" name="q1" value="Switch" />Switch</label><br />
+      <label><input type="radio" name="q1" value="PC" />PC</label><br />
+    </div>
+
+    <div class="question">
+      <h3>2. Quelle adresse identifie de façon unique un appareil sur un réseau local ?</h3><br>
+      <div id="cocher"><p>cocher la bonne réponse</p></div><br/>
+      <label><input type="radio" name="q2" value="Adresse IP" />Adresse IP</label><br />
+      <label><input type="radio" name="q2" value="Adresse MAC" />Adresse MAC</label><br />
+      <label><input type="radio" name="q2" value="Adresse DNS" />Adresse DNS</label><br />
+    </div>
+
+    <div class="question">
+      <h3>3. Quels sont les avantages de l’IPv6 par rapport à l’IPv4 ?</h3><br>
+       <div id="cocher"><p>cocher les bonnes réponses</p></div><br/>
+      <label><input type="checkbox" name="q3" value="Plus grand espace d’adressage" />Plus grand espace d’adressage</label><br />
+      <label><input type="checkbox" name="q3" value="Meilleure gestion de la sécurité" />Meilleure gestion de la sécurité</label><br />
+      <label><input type="checkbox" name="q3" value="Moins complexe" />Moins complexe</label><br />
+      <label><input type="checkbox" name="q3" value="Compatible avec tous les anciens équipements" />Compatible avec tous les anciens équipements</label><br />
+    </div>
+
+    <div class="question">
+      <h3>4. Quel protocole est utilisé pour attribuer automatiquement une adresse IP ?</h3><br>
+      <div id="cocher"><p>cocher la bonne réponse</p></div><br/>
+      <label><input type="radio" name="q4" value="HTTP" />HTTP</label><br />
+      <label><input type="radio" name="q4" value="DHCP" />DHCP</label><br />
+      <label><input type="radio" name="q4" value="FTP" />FTP</label><br />
+    </div>
+
+    <div class="question">
+      <h3>5. Une adresse MAC change à chaque redémarrage de l’ordinateur ?</h3><br>
+      <div id="cocher"><p>cocher la bonne réponse</p></div><br/>
+      <label><input type="radio" name="q5" value="Vrai" />Vrai</label><br />
+      <label><input type="radio" name="q5" value="Faux" />Faux</label><br />
+  
+    </div>
+
+    <div class="question">
+      <h3>6. Qu’est-ce qu’un serveur DNS ?</h3><br>
+      <div id="cocher"><p>cocher la bonne réponse</p></div><br/>
+      <label><input type="radio" name="q6" value="Un serveur qui stocke des fichiers" />Un serveur qui stocke des fichiers</label><br />
+      <label><input type="radio" name="q6" value="Un serveur qui traduit les noms de domaine en adresses IP" />Un serveur qui traduit les noms de domaine en adresses IP</label><br />
+      <label><input type="radio" name="q6" value="Un serveur de messagerie" />Un serveur de messagerie</label><br />
+    </div>
+
+    <div class="question">
+      <h3>7. Quelles sont les fonctions d’un pare-feu (firewall) ?</h3><br>
+       <div id="cocher"><p>cocher les bonnes réponses</p></div><br/>
+      <label><input type="checkbox" name="q7" value="Filtrer les paquets entrants et sortants" />Filtrer les paquets entrants et sortants</label><br />
+      <label><input type="checkbox" name="q7" value="Protéger contre les attaques réseau" />Protéger contre les attaques réseau</label><br />
+      <label><input type="checkbox" name="q7" value="Sauvegarder des données" />Sauvegarder des données</label><br />
+      <label><input type="checkbox" name="q7" value="Optimiser la vitesse du réseau" />Optimiser la vitesse du réseau</label><br />
+    </div>
+
+    <div class="question">
+      <h3>8. Quel protocole est sécurisé pour visiter un site web ?</h3><br>
+      <div id="cocher"><p>cocher la bonne réponse</p></div><br/>
+      <label><input type="radio" name="q8" value="HTTP" />HTTP</label><br />
+      <label><input type="radio" name="q8" value="FTP" />FTP</label><br />
+      <label><input type="radio" name="q8" value="HTTPS" />HTTPS</label><br />
+    </div>
+
+    <div class="question">
+      <h3>9. Quels sont des types d’adresses IP valides ?</h3><br>
+      <div id="cocher"><p>cocher les bonnes réponses</p></div><br/>
+      <label><input type="checkbox" name="q9" value="IPV6" />IPV6</label><br />
+      <label><input type="checkbox" name="q9" value="IPVX" />IPVX</label><br />
+      <label><input type="checkbox" name="q9" value="IPV4" />IPV4</label><br />
+      <label><input type="checkbox" name="q9" value="MAC" />MAC</label><br />
+    </div>
+
+    <div class="question">
+      <h3>10. Quelle couche du modèle OSI gère le routage des paquets ?</h3><br>
+      <div id="cocher"><p>cocher la bonne réponse</p></div><br/>
+      <label><input type="radio" name="q10" value="Couche application" />Couche application</label><br />
+      <label><input type="radio" name="q10" value="Couche réseau" />Couche réseau</label><br />
+      <label><input type="radio" name="q10" value="Couche transport" />Couche transport</label><br />
+    </div>
+
+    <div class="question">
+      <h3>11. Quels logiciels permettent de simuler un réseau ?</h3><br>
+      <div id="cocher"><p>cocher les bonnes réponses</p></div><br/>
+      <label><input type="checkbox" name="q11" value="WiFi Analyzer" />WiFi Analyzer</label><br />
+      <label><input type="checkbox" name="q11" value="Excel" />Excel</label><br />
+      <label><input type="checkbox" name="q11" value="Cisco Packet Tracer" />Cisco Packet Tracer</label><br />
+      <label><input type="checkbox" name="q11" value="GNS3" />GNS3</label><br />
+    </div>
+
+    <div class="question">
+      <h3>12. Un ping réussi signifie que la connexion entre deux machines fonctionne ?</h3><br>
+      <div id="cocher"><p>cocher la bonne réponse</p></div><br/>
+      <label><input type="radio" name="q12" value="Vrai" />Vrai</label><br />
+      <label><input type="radio" name="q12" value="Faux" />Faux</label><br />
+  
+    </div>
+
+    <button type="button" id="prevBtn" onclick="questionPrecedente()" disabled>Précédent</button>
+    <button type="button" id="nextBtn" onclick="questionSuivante()">Suivant</button>
+  </form>
+
+  <div id="Score"></div>
+
+  <div class="footer">
+    <p>Quiz © 2025 - NetMap</p>
+  </div>
+
+  <script>
+   const questions = document.querySelectorAll('.question');
+   let indexQuestion = 0;
+   let score = 0;
+
+  const bonnesReponses = {
+    q1: 'Routeur',
+    q2: 'Adresse IP',
+    q3: ['Plus grand espace d’adressage', 'Meilleure gestion de la sécurité'],
+    q4: 'DHCP',
+    q5: 'Faux',
+    q6: 'Un serveur qui traduit les noms de domaine en adresses IP',
+    q7: ['Filtrer les paquets entrants et sortants', 'Protéger contre les attaques réseau'],
+    q8: 'HTTPS',
+    q9: ['IPV6', 'IPV4'],
+    q10: 'Couche réseau',
+    q11: ['Cisco Packet Tracer', 'GNS3'],
+    q12:'Vrai',
+};
+
+function questionSuivante() {
+    const questionActuelle = questions[indexQuestion];
+    const nomQuestion = "q" + (indexQuestion + 1);
+    const reponses = document.querySelectorAll(`input[name="${nomQuestion}"]`);
+
+    let reponsesSelectionnees = Array.from(reponses).filter(r => r.checked);
+    if (reponsesSelectionnees.length === 0) {
+        alert("Veuillez choisir une réponse.");
+        return;
+    }
+
+    questionActuelle.classList.remove('active');
+    indexQuestion++;
+
+    if (indexQuestion < questions.length) {
+        questions[indexQuestion].classList.add('active');
+    } else {
+        calculerScore();
+        document.getElementById('quizForm').style.display = 'none';
+    }
+
+    document.getElementById('prevBtn').disabled = indexQuestion === 0;
+    document.getElementById('nextBtn').disabled = indexQuestion >= questions.length;
+}
+
+function calculerScore() {
+    let score = 0;
+
+    for (let i = 0; i < questions.length; i++) {
+        const nomQuestion = "q" + (i + 1);
+        const reponses = document.querySelectorAll(`input[name="${nomQuestion}"]`);
+        const reponsesSelectionnees = Array.from(reponses).filter(r => r.checked);
+
+        if (reponsesSelectionnees.length === 0) continue;
+
+        if (Array.isArray(bonnesReponses[nomQuestion])) {
+            const bonnes = new Set(bonnesReponses[nomQuestion]);
+            const selectionUtilisateur = new Set(reponsesSelectionnees.map(r => r.value));
+            if (bonnes.size === selectionUtilisateur.size && [...bonnes].every(v => selectionUtilisateur.has(v))) {
+                score++;
+            }
+        } else {
+            if (reponsesSelectionnees[0].value === bonnesReponses[nomQuestion]) {
+                score++;
+            }
+        }
+    }
+
+    document.getElementById('Score').innerHTML = ` Score : <strong>${score}</strong> sur <strong>${questions.length}</strong>`;
+}
+
+function questionPrecedente() {
+    if (indexQuestion > 0) {
+        questions[indexQuestion].classList.remove('active');
+        indexQuestion--;
+        questions[indexQuestion].classList.add('active');
+
+        document.getElementById('quizForm').style.display = 'block';
+        document.getElementById('Score').innerHTML = '';
+
+        document.getElementById('prevBtn').disabled = indexQuestion === 0;
+        document.getElementById('nextBtn').disabled = false;
+    }
+}
+
+  </script>
+</body>
+</html>
