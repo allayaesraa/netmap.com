@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tutoriels - NetMap</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: left;
+      margin: 0;
+      background: linear-gradient(135deg, #d5daed, #a09fe5, #4863d2);
+      color: #333;
+      min-height: 100vh;
+      padding-bottom: 20px;
+    }
+    h1, h2, h3 {
+      color: #3c70a3;
+    }
+    section {
+      background-color: #fff;
+      padding: 30px 30px;
+      margin-bottom: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+    ul {
+      list-style-type: disc;
+      margin-left: 20px;
+    }
+    .important {
+      background-color: #eaf7ff;
+      border-left: 4px solid #007bff;
+      padding: 10px 15px;
+      margin-top: 20px;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+   .navbar {
+      background: linear-gradient(90deg, #0f1b3a, #1f3b8c);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      font-weight: bold;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+      padding: 0;
+      margin: 0;
+    }
+
+    .nav-links li a {
+      text-decoration: none;
+      color: white;
+      font-weight: 600;
+      padding: 8px 12px;
+      border-radius: 5px;
+      transition: all 0.3s;
+    }
+
+    .nav-links li a:hover, 
+    .nav-links li a.active {
+      background: rgba(73, 173, 244, 0.3);
+      color: #49adf4;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+      padding: 30px;
+      transition: all 0.3s ease;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 10;
+    }
+
+    .card h2 {
+      margin-top:center;
+      color: #73b9ec;
+    }
+
+    .card .short, .card .full {
+      margin: 10px 0;
+    }
+
+    .card .full {
+      display: none;
+    }
+
+    .card button {
+      background-color: #507bbf;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .card button:hover {
+      background-color: #1a4dab;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      color: white;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+  </style>
+  </head>
+  <body>
+  <header>
+    <nav class="navbar">
+      <div class="logo">NetMap</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="tutoriel.html" class="active">Tutoriel</a></li>
+        <li><a href="simulation.html">Simulation</a></li>
+        <li><a href="quiz.html">Quiz</a></li>
+      </ul>
+    </nav>
+  </header>
+ <section>
+    <h1>Tutoriel Réseau Informatique</h1>
+    <p>Bienvenue dans ce tutoriel complet consacré aux bases essentielles des réseaux informatiques. Ce guide vous aidera à comprendre les concepts fondamentaux qui permettent aux ordinateurs et autres appareils de communiquer efficacement.</p>
+  </section>
+
+  <section>
+    <h2>Qu’est-ce qu’un réseau informatique ?</h2>
+    <p>Un réseau informatique est un ensemble d’équipements connectés entre eux pour échanger des données et partager des ressources. Ces équipements peuvent être :</p>
+    <ul>
+      <li><strong>Ordinateurs et serveurs :</strong> Les appareils qui utilisent le réseau pour communiquer.</li>
+      <li><strong>Routeurs :</strong> Dispositifs qui dirigent le trafic entre différents réseaux, par exemple entre votre réseau local et Internet.</li>
+      <li><strong>Switchs :</strong> Equipements qui connectent plusieurs appareils dans un même réseau local et permettent la communication entre eux.</li>
+      <li><strong>Points d’accès Wi-Fi :</strong> Permettent la connexion sans fil des appareils au réseau.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Fonctionnement d’un réseau</h2>
+    <p>Chaque appareil d’un réseau possède une <strong>adresse IP</strong> unique, qui agit comme une adresse postale numérique permettant d’identifier chaque machine. Lorsqu’un appareil envoie des données, celles-ci sont découpées en petits morceaux appelés paquets. Ces paquets circulent à travers les équipements du réseau (switchs, routeurs) pour atteindre leur destination finale.</p>
+    <p>Le <strong>routage</strong> est le processus par lequel les routeurs déterminent le chemin optimal que les paquets doivent emprunter pour arriver à destination, notamment quand ils doivent passer d’un réseau à un autre.</p>
+  </section>
+
+  <section>
+    <h2>Pourquoi apprendre le réseau ?</h2>
+    <p>Maîtriser les concepts réseau est essentiel pour :</p>
+    <ul>
+      <li>Configurer correctement les connexions entre appareils.</li>
+      <li>Assurer la sécurité et la confidentialité des échanges.</li>
+      <li>Diagnostiquer et résoudre rapidement les problèmes de communication.</li>
+      <li>Optimiser les performances des infrastructures informatiques.</li>
+    </ul>
+  </section>
+  <div class="card">
+    <h2>IPv4</h2>
+    <p class="short">IPv4, ou Internet Protocol version 4, est un protocole de communication utilisé pour identifier les appareils sur un réseau et acheminer les paquets de données.
+       C'est la version la plus couramment utilisée du protocole Internet, bien qu'elle soit limitée par son espace d'adressage de 32 bits, ce qui a conduit à l'émergence de l'IPv6. </p><br>
+    <p class="full"><strong>Adresses :</strong>
+IPv4 utilise des adresses de 32 bits, ce qui permet environ 4,3 milliards d'adresses uniques. <br><br>
+<strong>Format : </strong>
+ Les adresses IPv4 sont généralement écrites sous forme de quatre nombres décimaux, séparés par des points (par exemple, 192.168.1.1). <br><br>
+<strong>Routage :</strong>
+IPv4 utilise des protocoles de routage pour déterminer le chemin des paquets de données entre les appareils sur un réseau. <br><br>
+<strong>Limitations :</strong>
+L'espace d'adressage limité d'IPv4 a conduit à la création d'IPv6, qui utilise des adresses de 128 bits, offrant un nombre beaucoup plus important d'adresses possibles. <br><br>
+<strong>Classes :</strong>
+Historiquement, IPv4 était organisé en classes d'adresses (A, B, C), mais ce système a été remplacé par le CIDR (Classless Inter-Domain Routing) pour une utilisation plus efficace de l'espace d'adressage. <br><br>
+<strong>Importance :</strong>
+IPv4 reste la base de la majorité des communications sur Internet malgré l'arrivée d'IPv6. <br><br>
+<img src="https://www.camerecole.org/images/COURS/informatiqe_c_d/ip_adresse.png" alt="ipv4" style="display: block; margin:0 auto;">
+</p>
+    <button onclick="toggleText(this)">Voir plus</button>
+  </div>
+
+<div class="card">
+  <h2>IPv6</h2>
+
+  <p class="short">
+    IPv6, ou Protocole Internet version 6, est la version la plus récente du protocole Internet (IP), conçu pour succéder à IPv4. 
+    Il offre un espace d'adressage beaucoup plus vaste, une sécurité améliorée, et une configuration plus simple, entre autres avantages.
+  </p>
+
+  <div class="full">
+    <strong>Espace d'adressage beaucoup plus grand :</strong>
+    <ul style="list-style-type: disc;">
+      <li>IPv4 utilise des adresses de 32 bits, limitant le nombre d'adresses disponibles à environ 4,3 milliards.</li>
+      <li>IPv6 utilise des adresses de 128 bits, offrant un espace d'adressage pratiquement illimité (340 undécillions d'adresses).</li>
+    </ul><br>
+
+    <strong style="color: #50952e;">Avantages :</strong><br><br>
+
+    <strong>Résolution du problème de pénurie d'adresses :</strong>
+    <p>Grâce à son espace d'adressage beaucoup plus vaste, IPv6 élimine le problème de l'épuisement des adresses IPv4.</p>
+
+    <strong>Configuration automatique :</strong>
+    <p>IPv6 permet une configuration automatique des périphériques, simplifiant la gestion du réseau.</p>
+
+    <strong>Sécurité améliorée :</strong>
+    <p>IPv6 intègre IPsec, un protocole de sécurité qui offre une meilleure protection des données.</p>
+
+    <strong>En-tête de paquet simplifié :</strong>
+    <p>L'en-tête de paquet IPv6 est plus simple et plus efficace, ce qui peut améliorer les performances du réseau.</p>
+
+    <strong>Routage optimisé :</strong>
+    <p>IPv6 offre des fonctionnalités de routage améliorées.</p>
+
+    <strong style="color: rgb(98, 181, 183);">Pourquoi adopter IPv6 ?</strong><br><br>
+
+    <strong>Anticiper l'augmentation du nombre d'appareils connectés :</strong>
+    <p>Avec l'essor de l'Internet des Objets (IoT), le nombre d'appareils connectés à Internet ne cesse de croître, rendant l'adoption d'IPv6 essentielle.</p>
+
+    <strong>Bénéficier des avantages d'une nouvelle génération de réseau :</strong>
+    <p>IPv6 offre des fonctionnalités qui améliorent la sécurité, la simplicité de configuration et les performances globales du réseau.</p> <br><br>
+    <img src="https://www.pynetlabs.com/wp-content/uploads/2023/07/Different-Types-of-IPv6-Addresses-1024x465.jpeg" alt="IPv6" style="display: block; margin:0 auto;">
+  </div>
+  <button onclick="toggleText(this)">Voir plus</button>
+</div>
+
+
+  <div class="card">
+  <h2>DHCP</h2>
+
+  <p class="short">
+    Le DHCP (Protocole de Configuration Dynamique des Hôtes) est un protocole qui permet d’attribuer automatiquement des adresses IP et des paramètres réseau aux appareils connectés. Il évite la configuration manuelle de chaque appareil.
+  </p>
+
+  <div class="full">
+    <strong style="color: rgb(98, 181, 183);">Fonctionnement du DHCP :</strong>
+    <ol>
+      <li><strong>Découverte (DHCPDISCOVER) :</strong> Lorsqu’un appareil se connecte, il envoie un message pour trouver un serveur DHCP.</li>
+      <li><strong>Offre (DHCPOFFER) :</strong> Le serveur DHCP répond avec une proposition d’adresse IP et d’autres paramètres.</li>
+      <li><strong>Requête (DHCPREQUEST) :</strong> L’appareil accepte une offre et envoie une requête pour confirmer.</li>
+      <li><strong>Accusé de réception (DHCPACK) :</strong> Le serveur valide l’attribution et l’appareil peut l’utiliser.</li>
+    </ol><br>
+
+    <strong style="color: #50952e;">Avantages :</strong>
+    <ul style="list-style-type: disc;">
+      <li><strong>Configuration automatique :</strong> Les appareils accèdent facilement au réseau sans configuration manuelle.</li>
+      <li><strong>Prévention des conflits d’adresses :</strong> Le serveur DHCP évite les doublons d’adresses IP.</li>
+      <li><strong>Gestion efficace des adresses :</strong> Les adresses sont attribuées temporairement (bail) et réutilisées.</li>
+      <li><strong>Flexibilité :</strong> Les paramètres peuvent être modifiés à tout moment côté serveur.</li> <br><br>
+    </ul>
+    <img src="https://media.licdn.com/dms/image/v2/D4E12AQGwqK2T-F5H4g/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1679437954869?e=2147483647&v=beta&t=cgg1dB0bzgseqvpccPAyQI7Zo76XdlXgHyXxcsHCOds" alt="DHCP" style="display: block; margin: 0 auto;">
+  </div>
+
+  <button onclick="toggleText(this)">Voir plus</button>
+</div>
+
+
+  <div class="card">
+  <h2>RIP</h2>
+
+  <p class="short">
+    RIP (Routing Information Protocol) est un protocole de routage à vecteur de distance, qui permet de choisir le chemin le plus court en fonction du nombre de sauts. 
+    Il est simple à utiliser mais limité dans les grands réseaux.
+  </p>
+
+  <div class="full">
+    <strong style="color: rgb(98, 181, 183);">Fonctionnement général :</strong>
+    <ul style="list-style-type: disc;">
+      <li><strong>Partage de la table de routage :</strong> Les routeurs RIP envoient périodiquement leur table de routage à leurs voisins.</li>
+      <li><strong>Calcul du chemin :</strong> Chaque routeur met à jour sa table en fonction des informations reçues, en choisissant le chemin avec le moins de sauts.</li>
+      <li><strong>Limitation du nombre de sauts :</strong> RIP considère une route comme inaccessible si elle nécessite plus de 15 sauts.</li>
+    </ul><br>
+
+    <strong style="color: #50952e;">Avantages :</strong>
+    <ul style="list-style-type: disc;">
+      <li><strong>Simplicité :</strong> Facile à comprendre, configurer et déployer.</li>
+      <li><strong>Largement supporté :</strong> Compatible avec de nombreux équipements réseau anciens et actuels.</li>
+    </ul><br>
+
+    <strong style="color: #d12c2c;">Inconvénients :</strong>
+    <ul style="list-style-type: disc;">
+      <li><strong>Limitation du nombre de sauts :</strong> Inadapté aux grands réseaux dépassant 15 routeurs entre deux points.</li>
+      <li><strong>Pas de prise en compte de la qualité des liaisons :</strong> RIP ignore la bande passante, la latence ou la fiabilité.</li>
+      <li><strong>Convergence lente :</strong> Les changements de topologie peuvent prendre du temps à se propager.</li> <br><br>
+    </ul>
+    <img src="https://cyberopti.com/wp-content/uploads/2025/02/rip-sauts.webp" alt="RIP" style="display: block; margin: 0 auto;">
+  </div>
+
+  <button onclick="toggleText(this)">Voir plus</button>
+</div>
+<div class="card">
+  <h2>OSPF</h2>
+
+  <p class="short">
+    OSPF (Open Shortest Path First) est un protocole de routage à état de liens utilisé dans les réseaux IP. 
+    Il calcule les meilleurs chemins à l’aide de l’algorithme de Dijkstra et divise les grands réseaux en zones pour une meilleure gestion.
+  </p>
+
+  <div class="full">
+    <strong style="color: rgb(98, 181, 183);">Fonctionnement :</strong>
+    <ul style="list-style-type: disc;">
+      <li><strong>État de liens :</strong> Les routeurs échangent des informations sur les liens disponibles au lieu de diffuser des tables complètes.</li>
+      <li><strong>Algorithme de Dijkstra :</strong> Chaque routeur calcule le chemin le plus court selon la topologie et les coûts des liens.</li>
+      <li><strong>Domaines et zones :</strong> OSPF permet de structurer le réseau en zones hiérarchiques pour une meilleure évolutivité.</li>
+      <li><strong>Types de paquets :</strong> OSPF utilise plusieurs types de paquets, dont :
+        <ul style="list-style-type: circle;">
+          <li><strong>Hello :</strong> découverte des voisins</li>
+          <li><strong>DBD :</strong> description de la base de données</li>
+          <li><strong>LSR :</strong> requête d’état de liens</li>
+          <li><strong>LSU :</strong> mise à jour d’état de liens</li>
+          <li><strong>LSA :</strong> annonce d’état de liens</li>
+        </ul>
+      </li>
+    </ul><br>
+
+    <strong style="color: #50952e;">Avantages :</strong>
+    <ul style="list-style-type: disc;">
+      <li><strong>Convergence rapide :</strong> Réagit efficacement aux changements dans la topologie du réseau.</li>
+      <li><strong>Évolutivité :</strong> Adapté aux grands réseaux grâce à la hiérarchisation en zones.</li>
+      <li><strong>Flexibilité :</strong> Utilise le coût des liens comme métrique, offrant un contrôle précis du routage.</li><br>
+    </ul>
+    <img src="https://media.licdn.com/dms/image/v2/C4E12AQGJ8MVFN_EQOg/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1632815510452?e=2147483647&v=beta&t=G9B7ukqfMO4nWAk5abXM7kAhfP9OSP-fir57p1IRKUk" alt="OSPF" style="display: block ;margin: 0 auto;">
+  </div>
+
+  <button onclick="toggleText(this)">Voir plus</button>
+</div>
+<section>
+    <h2>Simulation interactive</h2>
+    <p>Après avoir lu ce tutoriel, vous aurez la possibilité de mettre en pratique vos connaissances grâce à une <strong>simulation interactive</strong>. Cette simulation vous permettra de :</p>
+    <ul>
+      <li>Créer un réseau virtuel simple en ajoutant des ordinateurs, des routeurs et des switchs.</li>
+      <li>Connecter ces équipements entre eux pour former un réseau fonctionnel.</li>
+      <li>Configurer les adresses IP pour chaque appareil.</li>
+      <li>Observer en temps réel comment les données circulent à travers le réseau.</li>
+      <li>Tester différentes configurations pour comprendre l’impact sur la communication.</li>
+    </ul>
+    <div class="important">
+      Cette expérience pratique vous aidera à visualiser concrètement le fonctionnement des réseaux et à appliquer les concepts théoriques appris dans ce tutoriel.
+    </div>
+  </section>
+
+  <div class="footer">
+    <p>Tutoriel © 2025 - NetMap</p>
+  </div>
+
+
+  <script>
+    function toggleText(button) {
+      const fullText = button.previousElementSibling;
+      const shortText = fullText.previousElementSibling;
+
+      if (fullText.style.display === "none" || fullText.style.display === "") {
+        fullText.style.display = "block";
+        button.textContent = "Voir moins";
+      } else {
+        fullText.style.display = "none";
+        button.textContent = "Voir plus";
+      }
+    }
+  </script>
+</body>
+</html>
